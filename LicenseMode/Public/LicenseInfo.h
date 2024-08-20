@@ -1,3 +1,6 @@
+#ifndef A778032C_56E3_483C_A0B6_510E95FC4D13
+#define A778032C_56E3_483C_A0B6_510E95FC4D13
+
 #include <string>
 
 namespace Licensemode {
@@ -32,3 +35,5 @@ class LicenseInfo {
   RoleType customRole;
 };
 }  // namespace Licensemode
+
+#endif /* A778032C_56E3_483C_A0B6_510E95FC4D13 */
