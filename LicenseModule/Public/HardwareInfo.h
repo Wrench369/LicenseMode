@@ -3,22 +3,22 @@
 
 #include <string>
 
-namespace LicenseMode {
+namespace LicenseModule {
 class HardwareInfo {
  public:
   static std::string GetMachineCode();
 
-  static std::string MD5(std::string scr);
-
   static std::string GetCPUID();
 
-  static std::string GetMOtherboardID();
+  static std::string GetMotherboardID();
 
-  static std::string GetPhysicalMemoryID();
+  static std::string GetMacAddress();
 
  private:
+  static std::string execute(const std::string &command);
+
   static std::string myMachineCode;
 };
-}  // namespace LicenseMode
+}  // namespace LicenseModule
 
 #endif /* CD1D3D85_B993_4D94_805A_C2ACE9F17F62 */

@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Licensemode {
+namespace LicenseModule {
 
 enum class RoleType { Trial = 0, Expiration, Free };
 
@@ -34,6 +34,6 @@ class LicenseInfo {
 
   RoleType customRole;
 };
-}  // namespace Licensemode
+}  // namespace LicenseModule
 
 #endif /* A778032C_56E3_483C_A0B6_510E95FC4D13 */
