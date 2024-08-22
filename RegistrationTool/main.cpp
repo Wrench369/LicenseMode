@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+
 int main(int argc, char** argv) {
   int choicedNumber = -1;
   std::string authorizationTime, roleType, companyName;
@@ -10,9 +11,11 @@ int main(int argc, char** argv) {
   switch (choicedNumber) {
     case 1:
       std::cout << "试用版" << std::endl;
+      // 生成默认的有15天使用权限的授权证书
       break;
     case 2:
       std::cout << "年费版" << std::endl;
+      // 生成使用权限为1年的授权证书
       break;
     case 3:
       std::cout << "终身免费版" << std::endl;
