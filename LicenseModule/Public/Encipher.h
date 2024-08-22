@@ -4,9 +4,11 @@
 #include <fstream>
 #include <string>
 
-#include "openssl/rsa.h"
-#include "openssl/pem.h"
+#include "base64.hpp"
+#include "openssl/aes.h"
 #include "openssl/err.h"
+#include "openssl/pem.h"
+#include "openssl/rsa.h"
 
 namespace LicenseModule {
 class Encipher {
@@ -18,6 +20,10 @@ class Encipher {
 
   std::string RsaPubDecrypt(const std::string &cipher_text,
                             const std::string &pub_key);
+
+ private:
+  std::string userKey;
+  AES_KEY encryptKey, decryptKey;
 };
 }  // namespace LicenseModule
 

@@ -1,8 +1,9 @@
 #include <iostream>
 
+#include "Encipher.h"
 #include "HardwareInfo.h"
 #include "LicenseInfo.h"
-#include "Encipher.h"
+#include "base64.hpp"
 
 int main(int argc, char** argv) {
   LicenseModule::Encipher encipher;
@@ -33,6 +34,13 @@ int main(int argc, char** argv) {
   decrypt_text = encipher.RsaPubDecrypt(encrypt_text, pub_key);
   printf("decrypt: len=%d\n", decrypt_text.length());
   printf("decrypt: %s\n", decrypt_text.c_str());
+
+
+  // BASE64加密
+  auto encoded_str = base64::to_base64("Hello, World!");
+  std::cout << encoded_str << std::endl;  // SGVsbG8sIFdvcmxkIQ==
+  auto decoded_str = base64::from_base64("SGVsbG8sIFdvcmxkIQ==");
+  std::cout << decoded_str << std::endl;  // Hello, World!
 
   return 0;
 }
