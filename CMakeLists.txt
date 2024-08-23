@@ -25,6 +25,9 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 #base64
 include_directories(3rdparty/base64/include)
 
+#nlohmannJson
+include_directories(3rdparty/nlohmannJson/include)
+
 ###########################################
 # Main
 ###########################################

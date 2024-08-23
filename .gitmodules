@@ -4,3 +4,6 @@
 [submodule "3rdparty/base64"]
 	path = 3rdparty/base64
 	url = https://github.com/tobiaslocker/base64.git
+[submodule "3rdparty/nlohmannJson"]
+	path = 3rdparty/nlohmannJson
+	url = https://github.com/nlohmann/json.git

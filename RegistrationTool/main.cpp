@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
+#include <nlohmann/json.hpp>
 
+using json = nlohmann::json;
 
 int main(int argc, char** argv) {
   int choicedNumber = -1;
