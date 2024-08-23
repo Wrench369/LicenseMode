@@ -2,6 +2,10 @@
 #define A778032C_56E3_483C_A0B6_510E95FC4D13
 
 #include <string>
+#include "HardwareInfo.h"
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 namespace LicenseModule {
 
@@ -26,13 +30,15 @@ class LicenseInfo {
   void SetRoleType(RoleType _customRole);
 
  private:
-  const std::string customMachineCode;
+  std::string customMachineCode;
 
   double lastUseTime;
 
   double expireTime;
 
   RoleType customRole;
+  
+  json authorizedJsonFile;
 };
 }  // namespace LicenseModule
 
