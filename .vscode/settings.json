@@ -66,5 +66,7 @@
     "regex": "cpp",
     "shared_mutex": "cpp",
     "valarray": "cpp"
-  }
+  },
+  "commentTranslate.hover.enabled": true,
+  "commentTranslate.source": "Bing"
 }
