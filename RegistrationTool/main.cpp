@@ -38,19 +38,21 @@ int main(int argc, char** argv) {
       printf("%s\n", pri_key.c_str());
 
       // 私钥加密
-      // 1.先BASE64加密
-      auto encoded_str = base64::to_base64(certificate.dump());
-      std::cout << "BASE64-encoded_str: " << encoded_str << std::endl;
-      // 2.再RSA非对称加密
-      encrypt_text = encipher.RsaPriEncrypt(encoded_str, pri_key);
+      // 1.先RSA非对称加密
+      encrypt_text = encipher.RsaPriEncrypt(certificate.dump(), pri_key);
       std::cout << "encrypt_text: " << encrypt_text << std::endl;
+      // 2.再BASE64加密
+      auto encoded_str = base64::to_base64(encrypt_text);
+      std::cout << "BASE64-encoded_str: " << encoded_str << std::endl;
+      std::ofstream cipherText("cipherText.txt");
+      cipherText << encoded_str;
 
       // 公钥解密
       // 1.解RSA非对称加密
-      decrypt_text = encipher.RsaPubDecrypt(encrypt_text, pub_key);
+      auto decoded_str = base64::from_base64(encoded_str);
       // 2.解BASE64加密
-      auto decoded_str = base64::from_base64(decrypt_text);
-      std::cout << decoded_str << std::endl;
+      decrypt_text = encipher.RsaPubDecrypt(decoded_str, pub_key);
+      std::cout << decrypt_text << std::endl;
 
     } break;
     case 2: {
