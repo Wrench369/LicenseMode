@@ -25,8 +25,6 @@ include_directories(3rdparty/base64/include)
 #nlohmannJson
 include_directories(3rdparty/nlohmannJson/include)
 
-
-
 include_directories(LicenseModule/Public)
 aux_source_directory(LicenseModule/Private SRC_LICENSECODE)
 
@@ -37,7 +35,6 @@ add_executable(${PROJECT_NAME} main.cpp ${SRC_LICENSECODE})
 
 # 链接库
 target_link_libraries(${PROJECT_NAME} ${OPENSSL_LIBRARIES})
-
 
 # add_subdirectory(test)
 add_subdirectory(RegistrationTool)

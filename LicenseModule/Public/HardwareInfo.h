@@ -8,15 +8,7 @@ class HardwareInfo {
  public:
   static std::string GetMachineCode();
 
-  static std::string GetCPUID();
-
-  static std::string GetMotherboardID();
-
-  static std::string GetMacAddress();
-
  private:
-  static std::string execute(const std::string &command);
-
   static std::string myMachineCode;
 };
 }  // namespace LicenseModule
