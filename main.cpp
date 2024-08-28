@@ -1,6 +1,9 @@
 #include <iostream>
 #include "License.h"
 #include "LicenseManager.h"
+#include "MachineCodeGenerator.h"
+
+MachineCodeGenerator mcg;
 
 // Function to print the license details.
 void printLicenseDetails(const License& license) {
@@ -18,46 +21,50 @@ int main() {
     
     // Create an instance of LicenseManager with given RSA key paths.
     LicenseManager licenseManager(publicKeyPath, privateKeyPath);
+    licenseManager.crypto.generateKeys();
+
+    std::string machineCode = mcg.generateMachineCode();
+    std::cout << "machineCode: " << machineCode << std::endl;
 
     // Create trial user license.
-    License trialLicense = licenseManager.createLicense(RoleType::TRIAL, "Example Company", "MACHINE123");
+    License trialLicense = licenseManager.createLicense(RoleType::TRIAL, "Example Company", machineCode);
     std::cout << "Trial License Created:\n";
     printLicenseDetails(trialLicense);
-    std::cout << "\n";
+    std::cout << std::endl;
 
     // Create paid user license.
-    License paidLicense = licenseManager.createLicense(RoleType::PAID, "Example Company", "MACHINE123");
+    License paidLicense = licenseManager.createLicense(RoleType::PAID, "Example Company", machineCode);
     std::cout << "Paid License Created:\n";
     printLicenseDetails(paidLicense);
-    std::cout << "\n";
+    std::cout << std::endl;
 
     // Create permanent user license.
-    License permanentLicense = licenseManager.createLicense(RoleType::PERMANENT, "Example Company", "MACHINE123");
+    License permanentLicense = licenseManager.createLicense(RoleType::PERMANENT, "Example Company", machineCode);
     std::cout << "Permanent License Created:\n";
     printLicenseDetails(permanentLicense);
-    std::cout << "\n";
+    std::cout << std::endl;
 
     // Encrypt and then decrypt the trial license.
     std::string encryptedData = licenseManager.encryptLicense(trialLicense);
-    std::cout << "Encrypted Trial License: " << encryptedData << "\n\n";
+    std::cout << "Encrypted Trial License: " << encryptedData << std::endl;
 
     License decryptedLicense = licenseManager.decryptLicense(encryptedData);
     std::cout << "Decrypted Trial License:\n";
     printLicenseDetails(decryptedLicense);
-    std::cout << "\n";
+    std::cout << std::endl;
 
     // Validate the licenses using the current machine ID and time.
     std::string currentTime = licenseManager.getCurrentTime();
-    std::string currentMachineId = "MACHINE123";
+    std::string currentMachineId = mcg.generateMachineCode();
 
     bool isTrialLicenseValid = licenseManager.validateLicense(trialLicense, currentMachineId, currentTime);
-    std::cout << "Is Trial License Valid? " << (isTrialLicenseValid ? "Yes" : "No") << "\n";
+    std::cout << "Is Trial License Valid? " << (isTrialLicenseValid ? "Yes" : "No") << std::endl;
     
     bool isPaidLicenseValid = licenseManager.validateLicense(paidLicense, currentMachineId, currentTime);
-    std::cout << "Is Paid License Valid? " << (isPaidLicenseValid ? "Yes" : "No") << "\n";
+    std::cout << "Is Paid License Valid? " << (isPaidLicenseValid ? "Yes" : "No") << std::endl;
     
     bool isPermanentLicenseValid = licenseManager.validateLicense(permanentLicense, currentMachineId, currentTime);
-    std::cout << "Is Permanent License Valid? " << (isPermanentLicenseValid ? "Yes" : "No") << "\n";
+    std::cout << "Is Permanent License Valid? " << (isPermanentLicenseValid ? "Yes" : "No") << std::endl;
 
     return 0;
 }

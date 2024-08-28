@@ -87,9 +87,10 @@ class LicenseManager {
     return "";
   }
 
- private:
+ public:
   RSACrypto crypto;  // An instance of RSACrypto for encryption and decryption.
 
+ private:
   // Calculates a time a specified number of days from now and returns it as a
   // string.
   // @param daysAhead The number of days ahead to calculate the future date.
