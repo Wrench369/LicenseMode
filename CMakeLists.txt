@@ -15,9 +15,9 @@ include_directories(${OPENSSL_INCLUDE_DIR})
 # 3rdparty
 ###########################################
 #Unit test
-add_subdirectory(3rdparty/googletest)
-enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+# add_subdirectory(3rdparty/googletest)
+# enable_testing()
+# include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 #base64
 include_directories(3rdparty/base64/include)
@@ -37,4 +37,4 @@ add_executable(${PROJECT_NAME} main.cpp ${SRC_LICENSECODE})
 target_link_libraries(${PROJECT_NAME} ${OPENSSL_LIBRARIES})
 
 # add_subdirectory(test)
-add_subdirectory(RegistrationTool)
+# add_subdirectory(RegistrationTool)
