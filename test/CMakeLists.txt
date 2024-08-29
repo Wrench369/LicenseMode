@@ -1,7 +1,7 @@
 
 set(unittestSrc
-    # test/test_main.cpp
-    hello_test.cpp
+    LicenseManager_test.cpp
+    RSACrypto_test.cpp
 )
 
 ###########################################
@@ -10,10 +10,10 @@ set(unittestSrc
 #Unit test
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../3rdparty/googletest ${CMAKE_CURRENT_BINARY_DIR}/googletest)
 enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+include_directories(GoogleTest)
 
-add_executable(hello_test ${unittestSrc})
-target_link_libraries(hello_test gtest gtest_main)
+add_executable(test_all ${unittestSrc})
+target_link_libraries(test_all gtest gtest_main gmock)
 
 # This is so you can do 'make test' to see all your tests run, instead of
 # manually running the executable runUnitTests to see those specific tests.
