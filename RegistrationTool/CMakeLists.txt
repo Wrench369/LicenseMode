@@ -8,22 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # 查找 OpenSSL 库
 find_package(OpenSSL REQUIRED)
 
-# 添加 OpenSSL 头文件目录
-include_directories(${OPENSSL_INCLUDE_DIR})
-
-include_directories(LicenseModule/Public)
-aux_source_directory(LicenseModule/Private SRC_LICENSECODE)
-
-###########################################
-# 3rdparty
-###########################################
-#base64
-include_directories(3rdparty/base64/include)
-
-#nlohmannJson
-include_directories(3rdparty/nlohmannJson/include)
-
-add_executable(${PROJECT_NAME} main.cpp ${SRC_LICENSECODE})
+add_executable(register main_register.cpp)
+add_executable(user main_demo.cpp)
 
 # 链接库
-target_link_libraries(${PROJECT_NAME} ${OPENSSL_LIBRARIES})
+target_link_libraries(register ${OPENSSL_LIBRARIES})
+target_link_libraries(user ${OPENSSL_LIBRARIES})

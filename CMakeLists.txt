@@ -36,5 +36,5 @@ add_executable(${PROJECT_NAME} main.cpp ${SRC_LICENSECODE})
 # 链接库
 target_link_libraries(${PROJECT_NAME} ${OPENSSL_LIBRARIES})
 
-# add_subdirectory(test)
-# add_subdirectory(RegistrationTool)
+add_subdirectory(test)
+add_subdirectory(RegistrationTool)

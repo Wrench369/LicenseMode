@@ -2,6 +2,7 @@
 
 #include <ctime>
 #include <string>
+
 #include "License.h"
 #include "RSACrypto.h"
 
@@ -68,6 +69,23 @@ class LicenseManager {
   bool validateLicense(const License& license,
                        const std::string& currentMachineId,
                        const std::string& currentTime) {
+    if (license.getRoleType() == RoleType::PERMANENT) {
+      // Permanent licenses are always valid for their machine.
+      return license.getMachineId() == currentMachineId;
+    }
+    return (license.getMachineId() == currentMachineId) &&
+           (license.getValidTime() > currentTime);
+  }
+
+  // Validates a License against current machine ID and time.
+  // @param encryptedlicenseStr Encrypted License character string to be verified.
+  // @param currentMachineId The current machine ID to validate against.
+  // @param currentTime The current time to compare with license validity.
+  // @return True if the license is valid; otherwise, false.
+  bool validateLicense(const std::string& encryptedlicenseStr,
+                       const std::string& currentMachineId,
+                       const std::string& currentTime) {
+    auto license = decryptLicense(encryptedlicenseStr);
     if (license.getRoleType() == RoleType::PERMANENT) {
       // Permanent licenses are always valid for their machine.
       return license.getMachineId() == currentMachineId;
