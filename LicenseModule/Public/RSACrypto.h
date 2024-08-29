@@ -3,10 +3,10 @@
 #include <openssl/err.h>
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
-#include "base64.hpp"
 #include <fstream>
 #include <iostream>
 #include <string>
+#include "base64.hpp"
 
 // Handles RSA encryption, decryption, and key generation.
 // Utilizes the OpenSSL library for cryptographic operations.
@@ -49,7 +49,7 @@ class RSACrypto {
     }
 
     // base64 encryption
-    auto encoded_str =  base64::to_base64(encrypted);
+    auto encoded_str = base64::to_base64(encrypted);
 
     return encoded_str;
   }
@@ -58,8 +58,14 @@ class RSACrypto {
   // @param encryptedMessage The encrypted message to decrypt.
   // @return Decrypted message as a string.
   std::string decrypt(const std::string& encryptedMessage) {
+    std::string decoded_str;
     // base64 decryption
-    auto decoded_str = base64::from_base64(encryptedMessage);
+    try {
+      decoded_str = base64::from_base64(encryptedMessage);
+    } catch (const std::exception& e) {
+      std::cerr << "error: " << e.what() << std::endl;
+      return "";
+    }
 
     // Load private key
     RSA* rsaPrivate = loadPrivateKey();
