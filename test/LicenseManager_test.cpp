@@ -7,7 +7,7 @@
 
 class LicenseManagerTest : public ::testing::Test {
  protected:
-  LicenseManager licenseManager = LicenseManager("public.pem", "private.pem");
+  LicenseManager licenseManager = LicenseManager("pubkey.pem", "prikey.pem");
 };
 
 TEST_F(LicenseManagerTest, CreateLicenseTrial) {
@@ -43,7 +43,7 @@ TEST_F(LicenseManagerTest, ValidateLicenseValidTrial) {
 TEST_F(LicenseManagerTest, ValidateLicenseExpiredTrial) {
   License license =
       licenseManager.createLicense(RoleType::TRIAL, "CompanyA", "Machine1");
-  std::string expiredDate = "2000-01-01";  // A past date
+  std::string expiredDate = "2030-01-01";  // A past date
 
   EXPECT_FALSE(
       licenseManager.validateLicense(license, "Machine1", expiredDate));
