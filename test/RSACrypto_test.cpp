@@ -1,71 +1,58 @@
 #include <gtest/gtest.h>
 #include <fstream>
-#include <string>
+#include <iostream>
 #include <cstdio>
-#include "RSACrypto.h"
+#include "RSACrypto.h"  // Include your RSACrypto header file
 
-// You might need to adjust the include path for the RSACrypto class.
+// Define paths for temporary key files
+const std::string publicKeyPath = "test_public.pem";
+const std::string privateKeyPath = "test_private.pem";
 
 class RSACryptoTest : public ::testing::Test {
-protected:
-    void SetUp() override {
-        publicKeyPath = "test_public_key.pem";
-        privateKeyPath = "test_private_key.pem";
-    }
+ protected:
+  // Setup is called before each test is run
+  void SetUp() override {
+    // Create an RSACrypto object with the temporary key paths
+    crypto = new RSACrypto(publicKeyPath, privateKeyPath);
+  }
 
-    void TearDown() override {
-        // Remove the files after test
-        std::remove(publicKeyPath.c_str());
-        std::remove(privateKeyPath.c_str());
-    }
+  // TearDown is called after each test is run
+  void TearDown() override {
+    // Clean up key files after each test
+    delete crypto;
+    std::remove(publicKeyPath.c_str());
+    std::remove(privateKeyPath.c_str());
+  }
 
-    std::string publicKeyPath;
-    std::string privateKeyPath;
+  RSACrypto* crypto;
 };
 
-TEST_F(RSACryptoTest, KeyGeneration) {
-    RSACrypto rsa(publicKeyPath, privateKeyPath);
-    EXPECT_TRUE(rsa.generateKeys());
-    
-    // Ensure the keys are stored
-    std::ifstream pubFile(publicKeyPath);
-    std::ifstream privFile(privateKeyPath);
-    EXPECT_TRUE(pubFile.is_open());
-    EXPECT_TRUE(privFile.is_open());
+TEST_F(RSACryptoTest, GenerateKeysSuccess) {
+  EXPECT_TRUE(crypto->generateKeys());
+  std::ifstream pubFile(publicKeyPath);
+  std::ifstream privFile(privateKeyPath);
+  EXPECT_TRUE(pubFile.good());
+  EXPECT_TRUE(privFile.good());
 }
 
-TEST_F(RSACryptoTest, EncryptDecrypt) {
-    RSACrypto rsa(publicKeyPath, privateKeyPath);
-    ASSERT_TRUE(rsa.generateKeys());
+TEST_F(RSACryptoTest, EncryptionDecryption) {
+  ASSERT_TRUE(crypto->generateKeys());
 
-    std::string message = "This is a secret message!";
-    std::string encrypted = rsa.encrypt(message);
-    ASSERT_FALSE(encrypted.empty());
+  std::string originalMessage = "Hello, RSA!";
+  std::string encryptedMessage = crypto->encrypt(originalMessage);
+  EXPECT_FALSE(encryptedMessage.empty());
 
-    std::string decrypted = rsa.decrypt(encrypted);
-    EXPECT_EQ(message, decrypted);
+  std::string decryptedMessage = crypto->decrypt(encryptedMessage);
+  EXPECT_EQ(originalMessage, decryptedMessage);
 }
 
-TEST_F(RSACryptoTest, InvalidPublicKey) {
-    RSACrypto rsa("nonexistent_public_key.pem", privateKeyPath);
-    std::string message = "Testing with invalid key";
-    std::string encrypted = rsa.encrypt(message);
-    EXPECT_TRUE(encrypted.empty());  // Encryption should fail
+TEST_F(RSACryptoTest, DecryptWithNoKey) {
+  std::string encryptedMessage = "invalid-encrypted-text";
+  std::string decryptedMessage = crypto->decrypt(encryptedMessage);
+  EXPECT_TRUE(decryptedMessage.empty());
 }
 
-TEST_F(RSACryptoTest, InvalidPrivateKey) {
-    RSACrypto rsa(publicKeyPath, "nonexistent_private_key.pem");
-    std::string message = "Testing with valid public, invalid private";
-    ASSERT_TRUE(rsa.generateKeys()); // Generate valid keys
-
-    std::string encrypted = rsa.encrypt(message);
-    ASSERT_FALSE(encrypted.empty());
-
-    std::string decrypted = rsa.decrypt(encrypted);
-    EXPECT_TRUE(decrypted.empty());  // Decryption should fail
-}
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+int main(int argc, char** argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

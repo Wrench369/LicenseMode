@@ -14,11 +14,6 @@ include_directories(${OPENSSL_INCLUDE_DIR})
 ###########################################
 # 3rdparty
 ###########################################
-#Unit test
-# add_subdirectory(3rdparty/googletest)
-# enable_testing()
-# include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-
 #base64
 include_directories(3rdparty/base64/include)
 

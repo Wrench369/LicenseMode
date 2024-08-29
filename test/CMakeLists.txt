@@ -1,8 +1,7 @@
+file(GLOB TEST_SRCS "*_test.cpp")
 
-set(unittestSrc
-    LicenseManager_test.cpp
-    RSACrypto_test.cpp
-)
+# 查找 OpenSSL 库
+find_package(OpenSSL REQUIRED)
 
 ###########################################
 # 3rdparty
@@ -10,11 +9,12 @@ set(unittestSrc
 #Unit test
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../3rdparty/googletest ${CMAKE_CURRENT_BINARY_DIR}/googletest)
 enable_testing()
+include(CTest)
 include_directories(GoogleTest)
 
-add_executable(test_all ${unittestSrc})
-target_link_libraries(test_all gtest gtest_main gmock)
-
-# This is so you can do 'make test' to see all your tests run, instead of
-# manually running the executable runUnitTests to see those specific tests.
-add_test(NAME test COMMAND hello_test)
+foreach(TEST_SRC ${TEST_SRCS})
+    get_filename_component(TEST_NAME ${TEST_SRC} NAME_WE)
+    add_executable(${TEST_NAME} ${TEST_SRC} ${unittestSrc})
+    target_link_libraries(${TEST_NAME} gtest gtest_main gmock ${OPENSSL_LIBRARIES})
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+endforeach()
