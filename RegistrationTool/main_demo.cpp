@@ -32,7 +32,7 @@ int main(int argc, char** arcv) {
       encryptedlicense, currentMachineId, currentTime);
   std::cout << "Is Trial License Valid? "
             << (isTrialLicenseValid ? "Yes" : "No") << std::endl;
-
+ 
   if (isTrialLicenseValid) {
     // main program
     std::cout << "Hello World!!" << std::endl;
