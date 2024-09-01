@@ -1,6 +1,6 @@
-# LicenseManager 
+# LicenseModule 
 
-LicenseManager is a C++ library designed to manage software licensing, including the creation, encryption, decryption, and validation of licenses. It uses RSA encryption to secure license information. 
+LicenseModule is a C++ library designed to manage software licensing, including the creation, encryption, decryption, and validation of licenses. It uses RSA encryption to secure license information. 
 
 ## Features
 
@@ -18,8 +18,8 @@ LicenseManager is a C++ library designed to manage software licensing, including
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/LicenseManager.git
-   cd LicenseManager
+   git clone https://xxx.git
+   cd LicenseModule
    ```
 
 2. **Build the Project**
@@ -37,7 +37,9 @@ LicenseManager is a C++ library designed to manage software licensing, including
    To run tests using Google Test, ensure it is installed, then run:
 
    ```bash
-   ./test/LicenseManagerTest
+   ./build/test/LicenseManager_test
+   ./build/test/License_test
+   ./build/test/RSACryto_test
    ```
 
 ## Usage
@@ -93,30 +95,3 @@ LicenseManager is a C++ library designed to manage software licensing, including
 ## Configuration
 
 - **RSA Keys**: Make sure to generate your RSA key pairs (`public.pem`, `private.pem`) for encryption and decryption. You can use tools like OpenSSL to generate these keys.
-
-## Contributing
-
-We welcome contributions! Follow these steps to contribute:
-
-1. Fork the repository.
-2. Create a feature branch.
-3. Commit your changes.
-4. Push to the branch.
-5. Create a Pull Request.
-
-Please ensure that your contributions include tests where applicable.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-## Contact
-
-For any questions or suggestions, please feel free to contact the repository owner or open an issue on GitHub.
-
-```
-### Notes
-
-- Feel free to customize any of the sections to match your project's specifics such as actual feature sets, repository URL, or licensing terms.
-- Ensure the paths and instructions align with your project's structure and development environment.
-```
